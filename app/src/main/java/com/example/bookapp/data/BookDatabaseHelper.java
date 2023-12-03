@@ -34,8 +34,7 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
     }
-
-
+    
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_BOOK_LIBRARY_TABLE);
@@ -65,7 +64,7 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = null;
-        cursor = db.query("SELECT * FROM " + TABLE_NAME, null, null, null, null, null, null);
+        cursor = db.query(TABLE_NAME, null, null, null, null, null, null);
         return cursor;
     }
 }
