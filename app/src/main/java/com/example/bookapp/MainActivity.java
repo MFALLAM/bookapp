@@ -7,12 +7,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.bookapp.data.BookDatabaseHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private FloatingActionButton floatingActionButton;
+    private BookDatabaseHelper mDdHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
