@@ -6,9 +6,6 @@ public class Book {
     private String authorName;
     private int totalPages;
 
-    public Book() {
-    }
-
     public Book(int id, String bookTitle, String authorName, int totalPages) {
         this.id = id;
         this.bookTitle = bookTitle;

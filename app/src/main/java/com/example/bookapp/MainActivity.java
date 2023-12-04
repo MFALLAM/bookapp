@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     BookDatabaseHelper mDdHelper;
     List<Book> booksList = new ArrayList<>();
     MainAdapter mMainAdapter;
+    MainAdapter.ItemClickListener listenOnItemClick;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         mDdHelper = new BookDatabaseHelper(this);
 
-        mMainAdapter = new MainAdapter(this, booksList);
+        mMainAdapter = new MainAdapter(this, booksList, listenOnItemClick);
 
         recyclerView.setAdapter(mMainAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
