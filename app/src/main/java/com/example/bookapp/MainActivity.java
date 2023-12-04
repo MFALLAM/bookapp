@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.bookapp.adapter.MainAdapter;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainAdapter.ItemClickListener {
 
     private RecyclerView recyclerView;
     private FloatingActionButton floatingActionButton;
@@ -32,23 +33,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        booksList = new ArrayList<>();
         findViewById();
 
-        booksList = new ArrayList<>();
-
         floatingActionButton.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, AddActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(MainActivity.this, AddActivity.class));
         });
 
         mDdHelper = new BookDatabaseHelper(this);
 
-        mMainAdapter = new MainAdapter(this, booksList, listenOnItemClick);
-
-        recyclerView.setAdapter(mMainAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        initRecyclerView();
         displayBooks();
+
+    }
+
+    private void initRecyclerView() {
+        mMainAdapter = new MainAdapter(this, booksList, this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(mMainAdapter);
     }
 
     private void displayBooks() {
@@ -75,5 +77,10 @@ public class MainActivity extends AppCompatActivity {
     private void findViewById() {
         recyclerView = findViewById(R.id.recyclerView);
         floatingActionButton = findViewById(R.id.float_action_btn_add);
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Toast.makeText(MainActivity.this, "Item clicked: " + booksList.get(position).getBookTitle(), Toast.LENGTH_SHORT).show();
     }
 }

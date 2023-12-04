@@ -14,7 +14,7 @@ import com.example.bookapp.data.Book;
 
 import java.util.List;
 
-public class MainAdapter extends RecyclerView.Adapter<MainAdapter.viewHolderAdapter> {
+public class MainAdapter extends RecyclerView.Adapter<MainAdapter.viewHolder> {
 
     private Context mContext;
     private List<Book> mListBooks;
@@ -28,13 +28,13 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.viewHolderAdap
 
     @NonNull
     @Override
-    public viewHolderAdapter onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.list_item_view, parent, false);
-        return new viewHolderAdapter(view, mListenOnItemClick);
+        return new viewHolder(view, mListenOnItemClick);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull viewHolderAdapter holder, int position) {
+    public void onBindViewHolder(@NonNull viewHolder holder, int position) {
         Book book = mListBooks.get(position);
 
         holder.book_id_textView.setText(String.valueOf(book.getId()));
@@ -48,7 +48,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.viewHolderAdap
         return mListBooks.size();
     }
 
-    public class viewHolderAdapter extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class viewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView book_id_textView;
         TextView book_title_textview;
@@ -57,7 +57,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.viewHolderAdap
 
         ItemClickListener mListenOnItemClick;
 
-        public viewHolderAdapter(@NonNull View itemView, ItemClickListener listenOnItemClick) {
+        public viewHolder(@NonNull View itemView, ItemClickListener listenOnItemClick) {
             super(itemView);
 
             book_id_textView = itemView.findViewById(R.id.book_id_textview);
@@ -71,11 +71,11 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.viewHolderAdap
 
         @Override
         public void onClick(View view) {
-            this.mListenOnItemClick.onItemClick(view, getAdapterPosition());
+            this.mListenOnItemClick.onItemClick(getAdapterPosition());
         }
     }
 
     public interface ItemClickListener {
-        void onItemClick(View view, int position);
+        void onItemClick(int position);
     }
 }
