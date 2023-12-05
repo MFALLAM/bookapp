@@ -46,7 +46,7 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addBook(String title, String authorName, int pages) {
+    public long addBook(String title, String authorName, int pages) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
@@ -56,8 +56,8 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COLUMN_PAGES, pages);
 
         long status = db.insert(TABLE_NAME, null, contentValues);
-
         Log.d(LOG_TAG, "OPERATION _ID " + status);
+        return status;
     }
 
     public Cursor getAllBooks() {

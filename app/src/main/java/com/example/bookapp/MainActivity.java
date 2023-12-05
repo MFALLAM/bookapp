@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
 
 import com.example.bookapp.adapter.MainAdapter;
@@ -28,6 +27,9 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.ItemC
     MainAdapter mMainAdapter;
     MainAdapter.ItemClickListener listenOnItemClick;
 
+    public static final String ARG_ADD = "ADD";
+    public static final String ARG_UPDATE = "UPDATE";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.ItemC
         findViewById();
 
         floatingActionButton.setOnClickListener(view -> {
-            startActivity(new Intent(MainActivity.this, AddActivity.class));
+            startActivity(new Intent(MainActivity.this, ActionActivity.class));
         });
 
         mDdHelper = new BookDatabaseHelper(this);
@@ -81,6 +83,17 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.ItemC
 
     @Override
     public void onItemClick(int position) {
-        Toast.makeText(MainActivity.this, "Item clicked: " + booksList.get(position).getBookTitle(), Toast.LENGTH_SHORT).show();
+        Bundle bundle = new Bundle();
+
+        bundle.putString(ARG_UPDATE, "UPDATE");
+        bundle.putInt("id", booksList.get(position).getId());
+        bundle.putString("title", booksList.get(position).getBookTitle());
+        bundle.putString("author", booksList.get(position).getAuthorName());
+        bundle.putString("pages", Integer.toString(booksList.get(position).getTotalPages()));
+
+        Intent intent = new Intent(MainActivity.this, ActionActivity.class);
+        intent.putExtras(bundle);
+
+        startActivity(intent);
     }
 }
