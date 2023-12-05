@@ -21,27 +21,32 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_TITLE = "title";
     public static final String COLUMN_AUTHOR = "author";
     public static final String COLUMN_PAGES = "pages";
+    public static final String COLUMN_TIMESTAMP = "publish_date";
+
     private final static String LOG_TAG = BookDatabaseHelper.class.getSimpleName();
 
-    public static final String SQL_CREATE_BOOK_LIBRARY_TABLE = "CREATE TABLE " + TABLE_NAME +
-            " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-            COLUMN_TITLE + " TEXT," +
-            COLUMN_AUTHOR + " TEXT, " +
-            COLUMN_PAGES + " INTEGER);";
+    public static final String SQL_CREATE_BOOK_LIBRARY_TABLE =
+                    "CREATE TABLE "  + TABLE_NAME                            + " (" +
+                    COLUMN_ID        + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    COLUMN_TITLE     + " TEXT,"                              +
+                    COLUMN_AUTHOR    + " TEXT,"                              +
+                    COLUMN_PAGES     + " INTEGER,"                           +
+                    COLUMN_TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP"  +
+                    ");";
 
 
     public BookDatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
     }
-    
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_BOOK_LIBRARY_TABLE);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int i, int i1) {
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }

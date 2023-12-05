@@ -57,5 +57,17 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteY="5dp" />
 
+        <TextView
+            android:id="@+id/book_publish_date_textview"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/book_pages_textview"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="5dp"
+            tools:text="Jan 14, 16 6:34 PM" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

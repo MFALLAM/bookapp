@@ -14,7 +14,9 @@ import com.example.bookapp.data.Book;
 import com.example.bookapp.data.BookDatabaseHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -70,8 +72,9 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.ItemC
             String title = cursor.getString(1);
             String author = cursor.getString(2);
             int pageCount = cursor.getInt(3);
+            int timestamp = cursor.getInt(4);
 
-            Book book = new Book(id, title, author, pageCount);
+            Book book = new Book(id, title, author, pageCount, timestamp);
             booksList.add(book);
         }
     }
@@ -96,4 +99,5 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.ItemC
 
         startActivity(intent);
     }
+
 }

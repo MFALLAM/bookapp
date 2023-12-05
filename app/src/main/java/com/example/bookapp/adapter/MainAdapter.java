@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.bookapp.R;
 import com.example.bookapp.data.Book;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.viewHolder> {
@@ -40,7 +42,9 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.viewHolder> {
         holder.book_id_textView.setText(String.valueOf(book.getId()));
         holder.book_title_textview.setText(book.getBookTitle());
         holder.book_author_textview.setText(book.getAuthorName());
-        holder.book_pages_textview.setText(String.valueOf(book.getTotalPages()));
+        holder.book_pages_textview.setText(String.valueOf(book.getTotalPages())+" pages");
+        holder.book_publish_date_textview.setText(getDateCurrentTimeZone(book.getTimestamp()));
+
     }
 
     @Override
@@ -54,6 +58,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.viewHolder> {
         TextView book_title_textview;
         TextView book_author_textview;
         TextView book_pages_textview;
+        TextView book_publish_date_textview;
 
         ItemClickListener mListenOnItemClick;
 
@@ -64,6 +69,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.viewHolder> {
             book_title_textview = itemView.findViewById(R.id.book_title_textview);
             book_author_textview = itemView.findViewById(R.id.book_author_textview);
             book_pages_textview = itemView.findViewById(R.id.book_pages_textview);
+            book_publish_date_textview = itemView.findViewById(R.id.book_publish_date_textview);
 
             this.mListenOnItemClick = listenOnItemClick;
             itemView.setOnClickListener(this);
@@ -77,5 +83,11 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.viewHolder> {
 
     public interface ItemClickListener {
         void onItemClick(int position);
+    }
+
+    private static String getDateCurrentTimeZone(long timestamp) {
+        Date dateObject = new Date(timestamp);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        return simpleDateFormat.format(dateObject);
     }
 }

@@ -5,12 +5,15 @@ public class Book {
     private String bookTitle;
     private String authorName;
     private int totalPages;
+    private int timestamp;
 
-    public Book(int id, String bookTitle, String authorName, int totalPages) {
+
+    public Book(int id, String bookTitle, String authorName, int totalPages, int timestamp) {
         this.id = id;
         this.bookTitle = bookTitle;
         this.authorName = authorName;
         this.totalPages = totalPages;
+        this.timestamp = timestamp;
     }
 
     public int getId() {
@@ -43,5 +46,13 @@ public class Book {
 
     public void setTotalPages(int totalPages) {
         this.totalPages = totalPages;
+    }
+
+    public int getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(int timestamp) {
+        this.timestamp = timestamp;
     }
 }
