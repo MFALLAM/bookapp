@@ -3,6 +3,7 @@ package com.example.bookapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -18,7 +19,8 @@ public class ActionActivity extends AppCompatActivity {
     private BookDatabaseHelper mDdHelper;
     public static final String ARG_ADD = "ADD";
     public static final String ARG_UPDATE = "UPDATE";
-
+    private final static String LOG_TAG = BookDatabaseHelper.class.getSimpleName();
+    private static boolean flag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,19 +30,27 @@ public class ActionActivity extends AppCompatActivity {
         findViewById();
         mDdHelper = new BookDatabaseHelper(ActionActivity.this);
 
-        mAddButton.setOnClickListener(view -> {
-            saveBook();
-        });
-
         // getting the bundle back
         Bundle bundle = getIntent().getExtras();
 
-        if(bundle != null && bundle.containsKey(ARG_UPDATE)) {
-            Toast.makeText(this, "Bundle found...", Toast.LENGTH_LONG).show();
+
+        if (bundle != null && bundle.containsKey("id")) {
             setData(bundle);
-        } else {
-            Toast.makeText(this, "Bundle is empty...", Toast.LENGTH_LONG).show();
+            flag = true;
         }
+
+        mAddButton.setOnClickListener(view -> {
+            if (flag) {
+                if (bundle != null) {
+                    modifyBook(bundle);
+                } else {
+                    // TODO: Handle the case where the bundle is null
+                }
+            } else {
+                saveBook();
+            }
+        });
+
     }
 
     private void setData(Bundle bundle) {
@@ -49,8 +59,15 @@ public class ActionActivity extends AppCompatActivity {
         mPagesNumberEdittext.setText(bundle.getString("pages"));
     }
 
-    private void updateData(Bundle bundle) {
+    private void modifyBook(Bundle bundle) {
+        int id = bundle.getInt("id");
+        String title = mBookTitleEdittext.getText().toString().trim();
+        String author = mBookAuthorEdittext.getText().toString().trim();
+        int pages = Integer.parseInt(mPagesNumberEdittext.getText().toString().trim());
 
+        long status = 0;
+        status = mDdHelper.updateBook(id, title, author, pages);
+        Log.d(LOG_TAG, "__modifyBookID: " + status + " _bookID_" + id);
     }
 
     private void saveBook() {
@@ -63,8 +80,6 @@ public class ActionActivity extends AppCompatActivity {
         if(status == -1) {
             Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(this, "Added new book", Toast.LENGTH_LONG).show();
-
             mBookTitleEdittext.getText().clear();
             mBookAuthorEdittext.getText().clear();
             mPagesNumberEdittext.getText().clear();

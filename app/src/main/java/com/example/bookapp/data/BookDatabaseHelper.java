@@ -65,6 +65,20 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
         return status;
     }
 
+    public long updateBook(int id, String title, String authorName, int pages) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_TITLE, title);
+        contentValues.put(COLUMN_AUTHOR, authorName);
+        contentValues.put(COLUMN_PAGES, pages);
+
+        String[] args = new String[]{String.valueOf(id)};
+        long status = db.update(TABLE_NAME, contentValues, "_id =?", args);
+        Log.d(LOG_TAG, "__updateBookId: " + status);
+        return status;
+    }
+
     public Cursor getAllBooks() {
         SQLiteDatabase db = this.getReadableDatabase();
 
