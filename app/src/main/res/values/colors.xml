@@ -9,7 +9,7 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
 
-    <color name="grey_3">#f7f7f7</color>
+    <color name="grey_3">#ffe2ff</color>
     <color name="grey_5">#f2f2f2</color>
     <color name="grey_10">#e6e6e6</color>
     <color name="grey_20">#cccccc</color>
@@ -24,4 +24,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="snackbar_error">#D81B60</color>
+    <color name="snackbar_succes">#1eb2a6</color>
+
 </resources>

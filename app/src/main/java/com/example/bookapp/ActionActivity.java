@@ -2,13 +2,20 @@ package com.example.bookapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+
+
 import android.widget.Button;
 import android.widget.EditText;
+
 import android.widget.Toast;
 
 import com.example.bookapp.data.BookDatabaseHelper;
+import com.google.android.material.snackbar.Snackbar;
+
 
 public class ActionActivity extends AppCompatActivity {
 
@@ -25,7 +32,7 @@ public class ActionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add);
+        setContentView(R.layout.activity_action);
 
         findViewById();
         mDdHelper = new BookDatabaseHelper(ActionActivity.this);
@@ -43,14 +50,27 @@ public class ActionActivity extends AppCompatActivity {
             if (flag) {
                 if (bundle != null) {
                     modifyBook(bundle);
+                    showSnackBar(true, "Note updated successfully");
                 } else {
                     // TODO: Handle the case where the bundle is null
+                    showSnackBar(false, "Error something went wrong");
                 }
             } else {
                 saveBook();
+                showSnackBar(true, "Note created successfully");
             }
         });
 
+    }
+
+    private void showSnackBar(boolean status, String message) {
+
+        String color = status == true ? "#1eb2a6" : "#D81B60";
+
+        Snackbar snackbar = Snackbar.make(findViewById(R.id.action_screen),message,Snackbar.LENGTH_LONG);
+        snackbar.setBackgroundTint(Color.parseColor(color));
+        snackbar.setTextColor(Color.parseColor("#000000"));
+        snackbar.show();
     }
 
     private void setData(Bundle bundle) {
