@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.bookapp.adapter.MainAdapter;
@@ -21,15 +22,12 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity implements MainAdapter.ItemClickListener {
-
+    private final static String LOG_TAG = BookDatabaseHelper.class.getSimpleName();
     private RecyclerView recyclerView;
     private FloatingActionButton floatingActionButton;
-    BookDatabaseHelper mDdHelper;
-    List<Book> booksList = new ArrayList<>();
-    MainAdapter mMainAdapter;
-    MainAdapter.ItemClickListener listenOnItemClick;
-
-    public static final String ARG_ADD = "ADD";
+    private BookDatabaseHelper mDdHelper;
+    private List<Book> booksList;
+    private MainAdapter mMainAdapter;
     public static final String ARG_UPDATE = "UPDATE";
 
     @Override
@@ -38,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.ItemC
         setContentView(R.layout.activity_main);
 
         booksList = new ArrayList<>();
-        findViewById();
+        initializeViews();
 
         floatingActionButton.setOnClickListener(view -> {
             startActivity(new Intent(MainActivity.this, ActionActivity.class));
@@ -47,14 +45,19 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.ItemC
         mDdHelper = new BookDatabaseHelper(this);
 
         initRecyclerView();
-        displayBooks();
-
+        Log.d(LOG_TAG, "onCreate: is called");
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        initRecyclerView();
+    protected void onResume() {
+        super.onResume();
+        refreshData();
+    }
+
+    private void refreshData() {
+        booksList.clear();
+        displayBooks();
+        mMainAdapter.notifyDataSetChanged();
     }
 
     private void initRecyclerView() {
@@ -78,32 +81,37 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.ItemC
             String title = cursor.getString(1);
             String author = cursor.getString(2);
             int pageCount = cursor.getInt(3);
-            int timestamp = cursor.getInt(4);
+            String timestamp = cursor.getString(4);
 
             Book book = new Book(id, title, author, pageCount, timestamp);
             booksList.add(book);
         }
     }
 
-    private void findViewById() {
+    private void initializeViews() {
         recyclerView = findViewById(R.id.recyclerView);
         floatingActionButton = findViewById(R.id.float_action_btn_add);
     }
 
-    @Override
-    public void onItemClick(int position) {
-        Bundle bundle = new Bundle();
+    private void startActionActivity(int position) {
+        Book selectedBook = booksList.get(position);
 
+        Bundle bundle = new Bundle();
         bundle.putString(ARG_UPDATE, "UPDATE");
-        bundle.putInt("id", booksList.get(position).getId());
-        bundle.putString("title", booksList.get(position).getBookTitle());
-        bundle.putString("author", booksList.get(position).getAuthorName());
-        bundle.putString("pages", Integer.toString(booksList.get(position).getTotalPages()));
+        bundle.putInt("id", selectedBook.getId());
+        bundle.putString("title", selectedBook.getBookTitle());
+        bundle.putString("author", selectedBook.getAuthorName());
+        bundle.putString("pages", Integer.toString(selectedBook.getTotalPages()));
 
         Intent intent = new Intent(MainActivity.this, ActionActivity.class);
         intent.putExtras(bundle);
 
         startActivity(intent);
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        startActionActivity(position);
     }
 
 }

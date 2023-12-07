@@ -41,7 +41,6 @@ public class ActionActivity extends AppCompatActivity {
         // getting the bundle back
         mBundle = getIntent().getExtras();
 
-
         if (mBundle != null && mBundle.containsKey("id")) {
             setData(mBundle);
             flag = true;
@@ -63,7 +62,6 @@ public class ActionActivity extends AppCompatActivity {
                 showSnackBar(true, "Note created successfully");
             }
         });
-
     }
 
     @Override
@@ -87,13 +85,10 @@ public class ActionActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ActionActivity.this);
                 builder.setMessage("Are you sure you want to delete this book?");
                 builder.setTitle("Delete book");
-                builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        String id = String.valueOf(mBundle.getInt("id"));
-                        removeBook(id);
-                        finish();
-                    }
+                builder.setPositiveButton("Confirm", (dialogInterface, i) -> {
+                    String id = String.valueOf(mBundle.getInt("id"));
+                    removeBook(id);
+                    finish();
                 }).setNegativeButton("Cancel", null).show();
                 return true;
             default:

@@ -5,10 +5,10 @@ public class Book {
     private String bookTitle;
     private String authorName;
     private int totalPages;
-    private int timestamp;
+    private String timestamp;
 
 
-    public Book(int id, String bookTitle, String authorName, int totalPages, int timestamp) {
+    public Book(int id, String bookTitle, String authorName, int totalPages, String timestamp) {
         this.id = id;
         this.bookTitle = bookTitle;
         this.authorName = authorName;
@@ -48,11 +48,11 @@ public class Book {
         this.totalPages = totalPages;
     }
 
-    public int getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(int timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 }

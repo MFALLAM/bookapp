@@ -1,6 +1,7 @@
 package com.example.bookapp.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.bookapp.R;
 import com.example.bookapp.data.Book;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -42,8 +44,10 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.viewHolder> {
         holder.book_id_textView.setText(String.valueOf(book.getId()));
         holder.book_title_textview.setText(book.getBookTitle());
         holder.book_author_textview.setText(book.getAuthorName());
-        holder.book_pages_textview.setText(String.valueOf(book.getTotalPages())+" pages");
+        holder.book_pages_textview.setText(book.getTotalPages()+" pages");
         holder.book_publish_date_textview.setText(getDateCurrentTimeZone(book.getTimestamp()));
+
+        Log.d("MainAdapter", "onBindViewHolder: SQLite Date->" + book.getTimestamp());
 
     }
 
@@ -85,9 +89,23 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.viewHolder> {
         void onItemClick(int position);
     }
 
-    private static String getDateCurrentTimeZone(long timestamp) {
-        Date dateObject = new Date(timestamp);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
-        return simpleDateFormat.format(dateObject);
+    private static String getDateCurrentTimeZone(String timestamp) {
+        if (timestamp == null || timestamp.isEmpty()) {
+            return "Invalid Date";
+        }
+
+        try {
+            // Assuming timestamp is in the format "yyyy-MM-dd HH:mm:ss"
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date dateObject = inputFormat.parse(timestamp);
+
+            // Assuming you want the output in the format "MM/dd/yyyy"
+            SimpleDateFormat outputFormat = new SimpleDateFormat("MMM-dd");
+            return outputFormat.format(dateObject);
+        } catch (ParseException e) {
+            // Handle the case where the timestamp string cannot be parsed to a date
+            e.printStackTrace();
+            return "Invalid Date";
+        }
     }
 }
