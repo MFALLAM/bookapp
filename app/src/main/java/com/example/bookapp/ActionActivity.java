@@ -1,17 +1,18 @@
 package com.example.bookapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-
-
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 
-import android.widget.Toast;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bookapp.data.BookDatabaseHelper;
 import com.google.android.material.snackbar.Snackbar;
@@ -24,10 +25,10 @@ public class ActionActivity extends AppCompatActivity {
     private EditText mPagesNumberEdittext;
     private Button mAddButton;
     private BookDatabaseHelper mDdHelper;
-    public static final String ARG_ADD = "ADD";
-    public static final String ARG_UPDATE = "UPDATE";
     private final static String LOG_TAG = BookDatabaseHelper.class.getSimpleName();
     private static boolean flag = false;
+    private MenuItem mItemMenu;
+    Bundle mBundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,18 +39,20 @@ public class ActionActivity extends AppCompatActivity {
         mDdHelper = new BookDatabaseHelper(ActionActivity.this);
 
         // getting the bundle back
-        Bundle bundle = getIntent().getExtras();
+        mBundle = getIntent().getExtras();
 
 
-        if (bundle != null && bundle.containsKey("id")) {
-            setData(bundle);
+        if (mBundle != null && mBundle.containsKey("id")) {
+            setData(mBundle);
             flag = true;
+        } else {
+            flag = false;
         }
 
         mAddButton.setOnClickListener(view -> {
             if (flag) {
-                if (bundle != null) {
-                    modifyBook(bundle);
+                if (mBundle != null) {
+                    modifyBook(mBundle);
                     showSnackBar(true, "Note updated successfully");
                 } else {
                     // TODO: Handle the case where the bundle is null
@@ -63,17 +66,55 @@ public class ActionActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        mItemMenu = menu.findItem(R.id.action_delete);
+
+        if (flag) {
+            mItemMenu.setVisible(true);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_delete:
+                // do something
+                AlertDialog.Builder builder = new AlertDialog.Builder(ActionActivity.this);
+                builder.setMessage("Are you sure you want to delete this book?");
+                builder.setTitle("Delete book");
+                builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String id = String.valueOf(mBundle.getInt("id"));
+                        removeBook(id);
+                        finish();
+                    }
+                }).setNegativeButton("Cancel", null).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void removeBook(String id) {
+        mDdHelper.deleteBook(id);
+    }
+
     private void showSnackBar(boolean status, String message) {
-
-        String color = status == true ? "#1eb2a6" : "#D81B60";
-
-        Snackbar snackbar = Snackbar.make(findViewById(R.id.action_screen),message,Snackbar.LENGTH_LONG);
+        String color = status ? "#1eb2a6" : "#D81B60";
+        Snackbar snackbar = Snackbar.make(findViewById(R.id.action_screen), message, Snackbar.LENGTH_LONG);
         snackbar.setBackgroundTint(Color.parseColor(color));
         snackbar.setTextColor(Color.parseColor("#000000"));
         snackbar.show();
     }
 
     private void setData(Bundle bundle) {
+        ActionActivity.this.setTitle(bundle.getString("title"));
         mBookTitleEdittext.setText(bundle.getString("title"));
         mBookAuthorEdittext.setText(bundle.getString("author"));
         mPagesNumberEdittext.setText(bundle.getString("pages"));
@@ -85,7 +126,7 @@ public class ActionActivity extends AppCompatActivity {
         String author = mBookAuthorEdittext.getText().toString().trim();
         int pages = Integer.parseInt(mPagesNumberEdittext.getText().toString().trim());
 
-        long status = 0;
+        long status;
         status = mDdHelper.updateBook(id, title, author, pages);
         Log.d(LOG_TAG, "__modifyBookID: " + status + " _bookID_" + id);
     }
@@ -95,15 +136,12 @@ public class ActionActivity extends AppCompatActivity {
         String author = mBookAuthorEdittext.getText().toString().trim();
         int pages = Integer.parseInt(mPagesNumberEdittext.getText().toString().trim());
 
-        long status = 0;
-        status = mDdHelper.addBook(title,author,pages);
-        if(status == -1) {
-            Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
-        } else {
-            mBookTitleEdittext.getText().clear();
-            mBookAuthorEdittext.getText().clear();
-            mPagesNumberEdittext.getText().clear();
-        }
+        long status;
+        status = mDdHelper.addBook(title, author, pages);
+
+        mBookTitleEdittext.getText().clear();
+        mBookAuthorEdittext.getText().clear();
+        mPagesNumberEdittext.getText().clear();
     }
 
     private void findViewById() {

@@ -51,6 +51,12 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.ItemC
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        initRecyclerView();
+    }
+
     private void initRecyclerView() {
         mMainAdapter = new MainAdapter(this, booksList, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

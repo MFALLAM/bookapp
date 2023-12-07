@@ -51,6 +51,12 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public void deleteBook(String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME, COLUMN_ID + " = ?", new String[]{id});
+        db.close();
+    }
+
     public long addBook(String title, String authorName, int pages) {
         SQLiteDatabase db = this.getWritableDatabase();
 
