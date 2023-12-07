@@ -1,6 +1,7 @@
 package com.example.bookapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.ItemC
     private List<Book> booksList;
     private MainAdapter mMainAdapter;
     public static final String ARG_UPDATE = "UPDATE";
+    private SearchView mSearchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +47,33 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.ItemC
         mDdHelper = new BookDatabaseHelper(this);
 
         initRecyclerView();
-        Log.d(LOG_TAG, "onCreate: is called");
+
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String book) {
+                filterBooks(book);
+                return true;
+            }
+        });
+    }
+
+    private void filterBooks(String filter) {
+        List<Book> filteredBooks = new ArrayList<>();
+        for (Book book : booksList) {
+            if(book.getBookTitle().toLowerCase().contains(filter.toLowerCase()) || book.getAuthorName().toLowerCase().contains(filter.toLowerCase())) {
+                filteredBooks.add(book);
+            }
+        }
+        if(filteredBooks.isEmpty()) {
+            Toast.makeText(this, "Can not find book with this title!", Toast.LENGTH_LONG).show();
+        } else {
+            mMainAdapter.setFilteredBooks(filteredBooks);
+        }
     }
 
     @Override
@@ -91,6 +119,8 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.ItemC
     private void initializeViews() {
         recyclerView = findViewById(R.id.recyclerView);
         floatingActionButton = findViewById(R.id.float_action_btn_add);
+        mSearchView = findViewById(R.id.searchView);
+        mSearchView.clearFocus();
     }
 
     private void startActionActivity(int position) {

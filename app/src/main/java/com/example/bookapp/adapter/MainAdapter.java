@@ -85,6 +85,11 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.viewHolder> {
         }
     }
 
+    public void setFilteredBooks(List<Book> books) {
+        this.mListBooks = books;
+        notifyDataSetChanged();
+    }
+
     public interface ItemClickListener {
         void onItemClick(int position);
     }
