@@ -34,6 +34,7 @@
         android:backgroundTint="@color/colorPrimary"
         android:clickable="true"
         android:focusable="true"
+        app:borderWidth="0dp"
         android:src="@drawable/icon_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
