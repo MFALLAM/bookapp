@@ -13,16 +13,16 @@
         android:layout_height="wrap_content"
         android:padding="12dp">
 
-        <TextView
-            android:id="@+id/book_id_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1"
-            android:textColor="@color/black"
-            android:textSize="40sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent" />
+<!--        <TextView-->
+<!--            android:id="@+id/book_id_textview"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="1"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="40sp"-->
+<!--            android:textStyle="bold"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent" />-->
 
         <TextView
             android:id="@+id/book_title_textview"
@@ -30,11 +30,11 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:text="Book Title"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
             android:textColor="@color/black"
             android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toRightOf="@+id/book_id_textview"
-            app:layout_constraintTop_toTopOf="@+id/book_id_textview" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/book_author_textview"

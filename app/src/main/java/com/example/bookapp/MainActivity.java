@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.ItemC
             }
         }
         if(filteredBooks.isEmpty()) {
-            Toast.makeText(this, "Can not find book with this title!", Toast.LENGTH_LONG).show();
+
         } else {
             mMainAdapter.setFilteredBooks(filteredBooks);
         }

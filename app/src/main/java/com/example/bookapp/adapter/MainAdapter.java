@@ -41,10 +41,10 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.viewHolder> {
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
         Book book = mListBooks.get(position);
 
-        holder.book_id_textView.setText(String.valueOf(book.getId()));
+        //holder.book_id_textView.setText(String.valueOf(book.getId()));
         holder.book_title_textview.setText(book.getBookTitle());
         holder.book_author_textview.setText(book.getAuthorName());
-        holder.book_pages_textview.setText(book.getTotalPages()+" pages");
+        holder.book_pages_textview.setText(book.getTotalPages()+" p");
         holder.book_publish_date_textview.setText(getDateCurrentTimeZone(book.getTimestamp()));
 
         Log.d("MainAdapter", "onBindViewHolder: SQLite Date->" + book.getTimestamp());
@@ -69,7 +69,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.viewHolder> {
         public viewHolder(@NonNull View itemView, ItemClickListener listenOnItemClick) {
             super(itemView);
 
-            book_id_textView = itemView.findViewById(R.id.book_id_textview);
+            //book_id_textView = itemView.findViewById(R.id.book_id_textview);
             book_title_textview = itemView.findViewById(R.id.book_title_textview);
             book_author_textview = itemView.findViewById(R.id.book_author_textview);
             book_pages_textview = itemView.findViewById(R.id.book_pages_textview);
