@@ -1,27 +1,26 @@
 <resources>
-    <string name="app_name">BookApp</string>
+    <string name="app_name">Book App</string>
     <string name="book_title">Book Title</string>
     <string name="delete">Delete</string>
     <string name="settings">settings</string>
 
 
-    <!-- Label for the temperature units preference [CHAR LIMIT=30] -->
-    <string name="pref_sorting_label">Sorting</string>
+    <string name="pref_sorting_label">Sort order</string>
+    <string name="pref_sort_default_value">ASC</string>
+    <string name="pref_sorting_key">sort_key</string>
 
-    <!-- Label for metric option in temperature unit preference [CHAR LIMIT=25] -->
-    <string name="pref_sort_label_asc">ASC</string>
 
-    <!-- Label for option in preference [CHAR LIMIT=25] -->
-    <string name="pref_sort_label_desc">DESC</string>
+    <string name="pref_title_appearance_category">Appearance</string>
+    <string name="pref_theme_default_value">Light</string>
+    <string name="pref_theme_key">theme_key</string>
+    <string name="pref_title_theme_label">Theme</string>
 
-    <!-- Key name for preference in SharedPreferences [CHAR LIMIT=NONE] -->
-    <string name="pref_sorting_key" translatable="false">sort</string>
 
-    <!-- Value in SharedPreferences for option [CHAR LIMIT=NONE] -->
-    <string name="pref_asc" translatable="false">asc</string>
+    <string name="pref_title_settings_category">APPLICATION SETTINGS</string>
+    <string name="pref_summary_sort_order_description">Change the sort order of your books</string>
+    <string name="pref_title_tags_category">Tags</string>
 
-    <!-- Value in SharedPreferences for option [CHAR LIMIT=NONE] -->
-    <string name="pref_desc" translatable="false">desc</string>
-
+    <string name="pref_title_auto_save_category">Auto save</string>
+    <string name="pref_sort_alphabetically">Sort alphabetically</string>
 
 </resources>
