@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="pref_sorting_options">
-        <item>@string/pref_sort_label_asc</item>
-        <item>@string/pref_sort_label_desc</item>
+        <item>Ascending A-Z</item>
+        <item>Descending Z-A</item>
     </string-array>
 
     <string-array name="pref_sorting_values">
-        <item>@string/pref_asc</item>
-        <item>@string/pref_desc</item>
+        <item>ASC</item>
+        <item>DESC</item>
     </string-array>
+
+    <string-array name="pref_theme_options">
+        <item>Light</item>
+        <item>Dark</item>
+    </string-array>
+
+    <string-array name="pref_theme_values">
+        <item>Light</item>
+        <item>Dark</item>
+    </string-array>
+
 </resources>

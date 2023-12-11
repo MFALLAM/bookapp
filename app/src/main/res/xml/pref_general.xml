@@ -1,10 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ListPreference
-        android:defaultValue="@string/pref_asc"
-        android:entries="@array/pref_sorting_options"
-        android:entryValues="@array/pref_sorting_values"
-        android:key="@string/pref_sorting_key"
-        android:title="@string/pref_sorting_label" />
+    <PreferenceCategory android:title="@string/pref_title_settings_category">
+        <ListPreference
+            android:defaultValue="@string/pref_sort_default_value"
+            android:entries="@array/pref_sorting_options"
+            android:entryValues="@array/pref_sorting_values"
+            android:key="@string/pref_sorting_key"
+            android:summary="@string/pref_summary_sort_order_description"
+            android:title="@string/pref_sorting_label" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_title_tags_category">
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="@string/pref_sort_alphabetically"
+            android:title="Sort alphabetically" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_title_appearance_category">
+        <ListPreference
+            android:defaultValue="@string/pref_theme_default_value"
+            android:entries="@array/pref_theme_options"
+            android:entryValues="@array/pref_theme_values"
+            android:key="@string/pref_theme_key"
+            android:title="@string/pref_title_theme_label" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_title_auto_save_category">
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="pref_key_auto_save"
+            android:summary="Automatically save notes when closing"
+            android:title="Autosave" />
+    </PreferenceCategory>
 </PreferenceScreen>
