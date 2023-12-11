@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    android:id="@+id/card_item"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_item"
     android:layout_width="match_parent"
-    android:layout_marginBottom="10dp"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="12dp">
 
-<!--        <TextView-->
-<!--            android:id="@+id/book_id_textview"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="1"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="40sp"-->
-<!--            android:textStyle="bold"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintLeft_toLeftOf="parent" />-->
+        <!--        <TextView-->
+        <!--            android:id="@+id/book_id_textview"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="1"-->
+        <!--            android:textColor="@color/black"-->
+        <!--            android:textSize="40sp"-->
+        <!--            android:textStyle="bold"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintLeft_toLeftOf="parent" />-->
 
         <TextView
             android:id="@+id/book_title_textview"
@@ -30,11 +29,11 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:text="Book Title"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
             android:textColor="@color/black"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/book_author_textview"
@@ -61,12 +60,12 @@
             android:id="@+id/book_publish_date_textview"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            app:layout_constraintTop_toBottomOf="@id/book_pages_textview"
-            app:layout_constraintRight_toRightOf="parent"
             android:layout_marginTop="5dp"
+            android:layout_weight="2"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/book_pages_textview"
             tools:text="Jan 14, 16 6:34 PM" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

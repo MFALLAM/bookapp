@@ -1,24 +1,25 @@
 package com.example.bookapp;
 
+import android.content.Intent;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;
-import android.database.Cursor;
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.example.bookapp.adapter.MainAdapter;
 import com.example.bookapp.data.Book;
 import com.example.bookapp.data.BookDatabaseHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -62,15 +63,36 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.ItemC
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_settings, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_settings:
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     private void filterBooks(String filter) {
         List<Book> filteredBooks = new ArrayList<>();
         for (Book book : booksList) {
-            if(book.getBookTitle().toLowerCase().contains(filter.toLowerCase()) || book.getAuthorName().toLowerCase().contains(filter.toLowerCase())) {
+            if (book.getBookTitle().toLowerCase().contains(filter.toLowerCase()) || book.getAuthorName().toLowerCase().contains(filter.toLowerCase())) {
                 filteredBooks.add(book);
             }
         }
-        if(filteredBooks.isEmpty()) {
-
+        if (filteredBooks.isEmpty()) {
+            Toast.makeText(this, "Can not find book with this title!", Toast.LENGTH_LONG).show();
         } else {
             mMainAdapter.setFilteredBooks(filteredBooks);
         }

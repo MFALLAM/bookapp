@@ -1,6 +1,27 @@
 <resources>
     <string name="app_name">BookApp</string>
     <string name="book_title">Book Title</string>
-    <string name="appbar_scrolling_view_behavior" translatable="false">com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior</string>
     <string name="delete">Delete</string>
+    <string name="settings">settings</string>
+
+
+    <!-- Label for the temperature units preference [CHAR LIMIT=30] -->
+    <string name="pref_sorting_label">Sorting</string>
+
+    <!-- Label for metric option in temperature unit preference [CHAR LIMIT=25] -->
+    <string name="pref_sort_label_asc">ASC</string>
+
+    <!-- Label for option in preference [CHAR LIMIT=25] -->
+    <string name="pref_sort_label_desc">DESC</string>
+
+    <!-- Key name for preference in SharedPreferences [CHAR LIMIT=NONE] -->
+    <string name="pref_sorting_key" translatable="false">sort</string>
+
+    <!-- Value in SharedPreferences for option [CHAR LIMIT=NONE] -->
+    <string name="pref_asc" translatable="false">asc</string>
+
+    <!-- Value in SharedPreferences for option [CHAR LIMIT=NONE] -->
+    <string name="pref_desc" translatable="false">desc</string>
+
+
 </resources>
