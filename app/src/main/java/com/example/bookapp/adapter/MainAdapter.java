@@ -46,9 +46,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.viewHolder> {
         holder.book_author_textview.setText(book.getAuthorName());
         holder.book_pages_textview.setText(book.getTotalPages()+" p");
         holder.book_publish_date_textview.setText(getDateCurrentTimeZone(book.getTimestamp()));
-
-        Log.d("MainAdapter", "onBindViewHolder: SQLite Date->" + book.getTimestamp());
-
     }
 
     @Override

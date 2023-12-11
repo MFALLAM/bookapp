@@ -1,14 +1,19 @@
 package com.example.bookapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity implements MainAdapter.ItemClickListener {
+public class MainActivity extends AppCompatActivity implements MainAdapter.ItemClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
     private final static String LOG_TAG = BookDatabaseHelper.class.getSimpleName();
     private RecyclerView recyclerView;
     private FloatingActionButton floatingActionButton;
@@ -40,6 +45,9 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.ItemC
 
         booksList = new ArrayList<>();
         initializeViews();
+
+        // First Step: Set default values of the shared prefs
+        PreferenceManager.setDefaultValues(this, R.xml.pref_general, false);
 
         floatingActionButton.setOnClickListener(view -> {
             startActivity(new Intent(MainActivity.this, ActionActivity.class));
@@ -61,6 +69,8 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.ItemC
                 return true;
             }
         });
+
+        setupSharedPreferences();
     }
 
     @Override
@@ -164,6 +174,21 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.ItemC
     @Override
     public void onItemClick(int position) {
         startActionActivity(position);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, @Nullable String key) {
+        // To get the shared preference of the project we need to call  SharedPreferences
+
+        Log.d(LOG_TAG, "onSharedPreferenceChanged: " + sharedPreferences.getString(key, ""));
+    }
+
+    private void setupSharedPreferences() {
+        SharedPreferences sharedPreferences = getSharedPreferences(PreferenceConstants.USER_SETTINGS_PREFERENCES, Context.MODE_PRIVATE);
+
+        Log.d(LOG_TAG, "setupSharedPreferences: " + sharedPreferences.getString("sort_key", ""));
+
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
     }
 
 }

@@ -32,6 +32,6 @@
             android:defaultValue="false"
             android:key="pref_key_auto_save"
             android:summary="Automatically save notes when closing"
-            android:title="Autosave" />
+            android:title="Auto-save" />
     </PreferenceCategory>
 </PreferenceScreen>
