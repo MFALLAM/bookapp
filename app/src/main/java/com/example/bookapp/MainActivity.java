@@ -195,14 +195,10 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.ItemC
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, @Nullable String key) {
         // To get the shared preference of the project we need to call  SharedPreferences
-
-        Log.d(LOG_TAG, "onSharedPreferenceChanged: " + sharedPreferences.getString(key, ""));
     }
 
     private void setupSharedPreferences() {
         SharedPreferences sharedPreferences = getSharedPreferences(PreferenceConstants.USER_SETTINGS_PREFERENCES, Context.MODE_PRIVATE);
-
-        Log.d(LOG_TAG, "setupSharedPreferences: " + sharedPreferences.getString("sort_key", ""));
 
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
     }

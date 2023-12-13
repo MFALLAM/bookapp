@@ -18,9 +18,9 @@
 
     <string name="pref_title_settings_category">APPLICATION SETTINGS</string>
     <string name="pref_summary_sort_order_description">Change the sort order of your books</string>
-    <string name="pref_title_tags_category">Tags</string>
+    <string name="pref_title_search">Search</string>
 
     <string name="pref_title_auto_save_category">Auto save</string>
-    <string name="pref_sort_alphabetically">sort_alphabetically</string>
+    <string name="pref_show_search">pref_show_search</string>
 
 </resources>

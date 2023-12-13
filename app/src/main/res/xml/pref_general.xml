@@ -11,11 +11,11 @@
             android:title="@string/pref_sorting_label" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/pref_title_tags_category">
+    <PreferenceCategory android:title="@string/pref_title_search">
         <CheckBoxPreference
             android:defaultValue="false"
-            android:key="@string/pref_sort_alphabetically"
-            android:title="Sort alphabetically" />
+            android:key="@string/pref_show_search"
+            android:title="Show search" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_title_appearance_category">
