@@ -2,6 +2,7 @@ package com.example.bookapp.data;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -9,9 +10,12 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.preference.PreferenceManager;
+
+import com.example.bookapp.R;
 
 
-public class BookDatabaseHelper extends SQLiteOpenHelper {
+public class BookDatabaseHelper extends SQLiteOpenHelper implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private final Context context;
     public static final String DATABASE_NAME = "book_library.db";
@@ -22,6 +26,8 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_AUTHOR = "author";
     public static final String COLUMN_PAGES = "pages";
     public static final String COLUMN_TIMESTAMP = "publish_date";
+    private String orderBy;
+    private SharedPreferences sharedPreferences;
 
     private final static String LOG_TAG = BookDatabaseHelper.class.getSimpleName();
 
@@ -38,11 +44,15 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
     public BookDatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+        this.orderBy = sharedPreferences.getString("sort_key", context.getString(R.string.pref_sort_default_value));
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_BOOK_LIBRARY_TABLE);
+
     }
 
     @Override
@@ -86,10 +96,25 @@ public class BookDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public Cursor getAllBooks() {
+
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = null;
-        cursor = db.query(TABLE_NAME, null, null, null, null, null, null);
+
+        cursor = db.query(TABLE_NAME, null, null, null, null, null, "_id " + orderBy);
         return cursor;
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, @Nullable String s) {
+        this.orderBy = sharedPreferences.getString("sort_key", "");
+        Log.d("BookDataHelper", "onSharedPreferenceChanged: " + sharedPreferences.getString("sort_key", ""));
+    }
+
+
+
+    // Don't forget to unregister the listener when it's no longer needed
+    public void unregisterOnSharedPreferenceChangeListener() {
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
     }
 }

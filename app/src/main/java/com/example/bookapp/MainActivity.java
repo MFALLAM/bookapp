@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -37,6 +39,9 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.ItemC
     private MainAdapter mMainAdapter;
     public static final String ARG_UPDATE = "UPDATE";
     private SearchView mSearchView;
+    private TextView mNoDataTextView;
+    private TextView mInfoClickTextView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +107,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.ItemC
             }
         }
         if (filteredBooks.isEmpty()) {
-            Toast.makeText(this, "Can not find book with this title!", Toast.LENGTH_LONG).show();
         } else {
             mMainAdapter.setFilteredBooks(filteredBooks);
         }
@@ -112,6 +116,14 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.ItemC
     protected void onResume() {
         super.onResume();
         refreshData();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(mDdHelper != null) {
+            mDdHelper.unregisterOnSharedPreferenceChangeListener();
+        }
     }
 
     private void refreshData() {
@@ -129,7 +141,8 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.ItemC
     private void displayBooks() {
         Cursor cursor = mDdHelper.getAllBooks();
         if (cursor.getCount() == 0) {
-            Toast.makeText(this, "No data has been found!", Toast.LENGTH_LONG).show();
+            mNoDataTextView.setVisibility(View.VISIBLE);
+            mInfoClickTextView.setVisibility(View.VISIBLE);
         } else {
             populateBooksList(cursor);
         }
@@ -153,6 +166,9 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.ItemC
         floatingActionButton = findViewById(R.id.float_action_btn_add);
         mSearchView = findViewById(R.id.searchView);
         mSearchView.clearFocus();
+        mNoDataTextView = findViewById(R.id.no_data_textview);
+        mInfoClickTextView = findViewById(R.id.info_click_textview);
+
     }
 
     private void startActionActivity(int position) {

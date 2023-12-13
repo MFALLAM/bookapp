@@ -102,7 +102,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.viewHolder> {
             Date dateObject = inputFormat.parse(timestamp);
 
             // Assuming you want the output in the format "MM/dd/yyyy"
-            SimpleDateFormat outputFormat = new SimpleDateFormat("MMM-dd");
+            SimpleDateFormat outputFormat = new SimpleDateFormat("MMM dd HH:mm");
             return outputFormat.format(dateObject);
         } catch (ParseException e) {
             // Handle the case where the timestamp string cannot be parsed to a date
